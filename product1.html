@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product page</title>
+    <link rel="stylesheet" href="category.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+     <style>
+    * {
+      box-sizing: border-box;
+      margin:0;
+      padding: 0;;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f6f9fc;
+      color: #333;
+      min-height: 100vh;
+    }
+    header nav{
+      box-shadow: 5px 5px 25px rgba(0,0,0,.5);
+  }
+  #logo{
+      color:blue;
+      font-size: 25px;
+      font-weight: 800;
+  }
+  .nav-item:hover{
+      text-decoration: underline 2px solid blue;
+  }
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .quantity-btn {
+      background: #0071dc;
+      color: #fff;
+      border: none;
+      padding: 0.35rem 0.8rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    .quantity-btn:disabled {
+      background: #aac8f5;
+      cursor: not-allowed;
+    }
+    .quantity-display {
+      width: 48px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0 0.8rem;
+      user-select: none;
+      border: 1.5px solid #047ae9;
+      border-radius: 6px;
+      padding: 0.25rem 0;
+    }
+    .purchase-btn {
+      margin-top: auto;
+      background: #077ae6e8;
+      border: none;
+      padding: 0.9rem 1.2rem;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    .purchase-btn:hover {
+      background:#0c7feb;
+    }
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      border-radius: 10px;
+      max-width: 480px;
+      width: 90%;
+      padding: 1.5rem 2rem 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #0052cc;
+      text-align: center;
+    }
+    .modal-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+    .modal-table th,
+    .modal-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    .modal-table th {
+      background: #f0f6ff;
+      color: #004bb5;
+    }
+    .modal-total {
+      margin-top: 1rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-align: right;
+      color: #1e88eb
+    }
+    .payment-type {
+      margin: 1rem 0;
+    }
+    .payment-option {
+      margin: 0.5rem 0;
+    }
+  </style>
+  </head>
+  <body>
+        <header>
+          <nav class="navbar navbar-expand-lg bg-light">
+              <div class="container-fluid">
+                  <a class="navbar-brand"  href="#" id="logo">AQUAFRESH</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                      <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                      <div class="offcanvas-header">
+                          <h4 id="logo">AQUAFRESH</h4>
+                          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                      </div>
+                      <div class="offcanvas-body">
+                          <ul class="navbar-nav justify-content-center flex-grow-1">
+                              <li class="nav-item">
+                              <a class="nav-link" href="index.html">Home</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="about.html">About Us</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link active" aria-current="page" href="category.html">Product</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="contact.html">Contact Us</a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </nav>
+      </header>
+
+  <div id="product-list" class="container">
+      <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+              <ol class="breadcrumb m-5">
+                  <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                  <li class="breadcrumb-item"><a href="category.html">Product</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Product-1</li>
+              </ol>
+        </nav>
+    <div class="row" id="product-cards">
+
+      <!-- Product 1 -->
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-img-top text-center" ><img src="image/bottle1.png" class="card-img-top" alt="..." height="250"></div>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Sparkling Water-250ML</h5>
+            <p class="card-text text-primary fw-bold">30</p>
+            <div class="quantity-controls d-flex align-items-center mb-3">
+              <button class="quantity-btn btn btn-primary btn-sm" aria-label="Decrease" disabled>−</button>
+              <div class="quantity-display text-center px-3 fs-5 fw-semibold mx-2" style="min-width:48px;">0</div>
+              <button class="quantity-btn btn btn-primary btn-sm" aria-label="Increase">+</button>
+            </div>
+            <button class="purchase-btn btn btn-primary mt-auto text-white" aria-label="Sparkling Water">Purchase</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-img-top text-center"><img src="image/b1.png" class="card-img-top" alt="..." height="250"></div>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Sparkling Water-500ML</h5>
+            <p class="card-text text-primary fw-bold">60</p>
+            <div class="quantity-controls d-flex align-items-center mb-3">
+              <button class="quantity-btn btn btn-primary btn-sm" aria-label="Decrease" disabled>−</button>
+              <div class="quantity-display text-center px-3 fs-5 fw-semibold mx-2" style="min-width:48px;">0</div>
+              <button class="quantity-btn btn btn-primary btn-sm" aria-label="Increase">+</button>
+            </div>
+            <button class="purchase-btn btn  mt-auto text-white" aria-label="Sparkling water">Purchase</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-img-top text-center" ><img src="image/bottle6.png" class="card-img-top" alt="" height="250"></div>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Sparkling Water-1L</h5>
+            <p class="card-text text-primary fw-bold">90</p>
+            <div class="quantity-controls d-flex align-items-center mb-3">
+              <button class="quantity-btn btn btn-primary btn-sm" aria-label="Decrease" disabled>−</button>
+              <div class="quantity-display text-center px-3 fs-5 fw-semibold mx-2" style="min-width:48px;">0</div>
+              <button class="quantity-btn btn btn-primary btn-sm" aria-label="Increase">+</button>
+            </div>
+            <button class="purchase-btn btn  mt-auto text-white" aria-label="Sparkilng Water">Purchase</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- Modal overlay -->
+  <div class="modal-overlay" id="purchase-summary-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+    <div class="modal">
+      <h2 id="modal-title">Purchase Summary</h2>
+      <table class="modal-table" aria-describedby="modal-desc">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="modal-summary-body">
+          <!-- Summary rows inserted here -->
+        </tbody>
+      </table>
+      <div class="modal-total" id="modal-total-price">
+        Total: 0.00
+      </div>
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" class="form-control" required />
+        <label for="email">Email ID:</label>
+        <input type="email" id="email" class="form-control" required />
+        <label for="address">Address:</label>
+        <input type="text" id="address" class="form-control" required />
+        <label for="phone">Phone No:</label>
+        <input type="tel" id="phone" class="form-control" required />
+        <label for="pincode">Pincode:</label>
+        <input type="text" id="pincode" class="form-control" required />
+      </div>
+      <div class="payment-type">
+        <label>Payment Type:</label>
+        <div class="payment-option">
+          <input type="radio" id="cod" name="payment" value="cash" checked />
+          <label for="cod">Cash on Delivery</label>
+        </div>
+        <div class="payment-option">
+          <input type="radio" id="online" name="payment" value="online" />
+          <label for="online">Online Payment</label>
+        </div>
+        <div id="online-options" style="display: none;">
+          <div class="payment-option">
+            <input type="radio" id="gpay" name="online-payment" value="gpay" />
+            <label for="gpay">GPay</label>
+          </div>
+          <div class="payment-option">
+            <input type="radio" id="phonepe" name="online-payment" value="phonepe" />
+            <label for="phonepe">PhonePe</label>
+          </div>
+          <div class="payment-option">
+            <input type="radio" id="paytm" name="online-payment" value="paytm" />
+            <label for="paytm">Paytm</label>
+          </div>
+        </div>
+      </div>
+      <button class="purchase-btn" id="pay-now-btn">Pay Now</button>
+    </div>
+  </div>
+
+  <script>
+    const quantities = {};
+
+    // Initialize quantities and elements
+    document.querySelectorAll('.card').forEach(card => {
+      const productName = card.querySelector('.card-title').textContent;
+      const priceText = card.querySelector('.card-text').textContent;
+      const price = parseFloat(priceText.replace('$', ''));
+
+      quantities[productName] = 0;
+
+      const decBtn = card.querySelectorAll('.quantity-btn')[0];
+      const incBtn = card.querySelectorAll('.quantity-btn')[1];
+      const quantityDisplay = card.querySelector('.quantity-display');
+      const purchaseBtn = card.querySelector('.purchase-btn');
+
+      incBtn.addEventListener('click', () => {
+        quantities[productName]++;
+        quantityDisplay.textContent = quantities[productName];
+        if (quantities[productName] > 0) {
+          decBtn.disabled = false;
+        }
+      });
+
+      decBtn.addEventListener('click', () => {
+        if (quantities[productName] > 0) {
+          quantities[productName]--;
+          quantityDisplay.textContent = quantities[productName];
+          if (quantities[productName] === 0) {
+            decBtn.disabled = true;
+          }
+        }
+      });
+
+      purchaseBtn.addEventListener('click', () => {
+        // Alert if no product selected
+        const totalQuantity = Object.values(quantities).reduce((acc, val) => acc + val, 0);
+        if (totalQuantity === 0) {
+          alert('Please select product quantity to proceed.');
+          return;
+        }
+        showPurchaseSummary();
+      });
+
+      // Store product price for calculations
+      card.dataset.price = price;
+      card.dataset.name = productName;
+    });
+
+    const purchaseSummaryModal = document.getElementById('purchase-summary-modal');
+    const modalSummaryBody = document.getElementById('modal-summary-body');
+    const modalTotalPrice = document.getElementById('modal-total-price');
+    const payNowBtn = document.getElementById('pay-now-btn');
+
+    function showPurchaseSummary() {
+      modalSummaryBody.innerHTML = '';
+      let grandTotal = 0;
+      const productCards = document.querySelectorAll('.card');
+      const productsToShow = [];
+
+      productCards.forEach(card => {
+        const name = card.dataset.name;
+        const qty = quantities[name] || 0;
+        if (qty > 0) {
+          const price = parseFloat(card.dataset.price);
+          productsToShow.push({ name, qty, price });
+        }
+      });
+
+      if (productsToShow.length === 0) {
+        modalSummaryBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No products selected.</td></tr>';
+        modalTotalPrice.textContent = 'Total: 0.00';
+      } else {
+        productsToShow.forEach(product => {
+          const subtotal = product.qty * product.price;
+          grandTotal += subtotal;
+
+          const row = document.createElement('tr');
+
+          const nameCell = document.createElement('td');
+          nameCell.textContent = product.name;
+          row.appendChild(nameCell);
+
+          const qtyCell = document.createElement('td');
+          qtyCell.textContent = product.qty;
+          row.appendChild(qtyCell);
+
+          const priceCell = document.createElement('td');
+          priceCell.textContent = `${product.price.toFixed(2)}`;
+          row.appendChild(priceCell);
+
+          const subtotalCell = document.createElement('td');
+          subtotalCell.textContent = `${subtotal.toFixed(2)}`;
+          row.appendChild(subtotalCell);
+
+          modalSummaryBody.appendChild(row);
+        });
+        modalTotalPrice.textContent = `Total: ${grandTotal.toFixed(2)}`;
+      }
+      purchaseSummaryModal.classList.add('active');
+      purchaseSummaryModal.focus();
+    }
+
+    // Payment type change event
+    document.querySelectorAll('input[name="payment"]').forEach(elem => {
+      elem.addEventListener('change', event => {
+        const onlineOptions = document.getElementById('online-options');
+        onlineOptions.style.display = event.target.value === 'online' ? 'block' : 'none';
+      });
+    });
+
+    // Pay Now button event - check form then alert payment processed and refresh page
+    payNowBtn.addEventListener('click', () => {
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      const address = document.getElementById('address');
+      const phone = document.getElementById('phone');
+      const pincode = document.getElementById('pincode');
+
+      if (
+        name.value.trim() === '' ||
+        email.value.trim() === '' ||
+        address.value.trim() === '' ||
+        phone.value.trim() === '' ||
+        pincode.value.trim() === ''
+      ) {
+        alert('Please fill your details');
+        return;
+      }
+      alert('Payment processing');
+      // Refresh page after alert
+      location.reload();
+    });
+
+    // Close modal function
+    function closeModal() {
+      purchaseSummaryModal.classList.remove('active');
+    }
+
+    // Close modal when clicking outside modal content
+    purchaseSummaryModal.addEventListener('click', event => {
+      if (event.target === purchaseSummaryModal) closeModal();
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && purchaseSummaryModal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+  </script>
+  </body>
+  </html>
